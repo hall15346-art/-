@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>영업부서 파이프라인 - 주식회사 팔로우엔</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+</head>
+<body>
+    <div id="splash" class="splash-screen">
+        <div class="splash-content">
+            <img src="images/followen-logo.png" alt="팔로우엔 로고" class="splash-logo">
+            <h1 class="splash-title">주식회사 팔로우엔</h1>
+            <p class="splash-subtitle">영업부서 파이프라인</p>
+        </div>
+    </div>
+    <div id="mainApp" class="main-app hidden">
+        <header class="header">
+            <div class="header-left">
+                <img src="images/followen-logo.png" alt="팔로우엔 로고" class="header-logo">
+                <span class="company-name">주식회사 팔로우엔</span>
+            </div>
+            <div class="header-center">
+                <h1 class="app-title">
+                    <i class="fas fa-chart-line"></i>
+                    영업부서 파이프라인
+                </h1>
+            </div>
+            <div class="header-right">
+                <div class="date-display">
+                    <i class="fas fa-calendar-day"></i>
+                    <span id="currentDate"></span>
+                </div>
+                <div class="db-input-group">
+                    <label for="dailyDb">
+                        <i class="fas fa-database"></i> DB 투입량:
+                    </label>
+                    <input type="number" id="dailyDb" placeholder="0" min="0">
+                </div>
+                <button class="btn-reset" id="btnReset" title="데이터 초기화">
+                    <i class="fas fa-redo"></i>
+                </button>
+            </div>
+        </header>
+        <nav class="tab-nav">
+            <button class="tab-btn active" data-tab="pipeline">
+                <i class="fas fa-stream"></i>
+                전체 파이프라인
+            </button>
+            <button class="tab-btn" data-tab="daily">
+                <i class="fas fa-calendar-check"></i>
+                일별 추적
+            </button>
+            <button class="tab-btn" data-tab="chart">
+                <i class="fas fa-chart-bar"></i>
+                퍼널 차트
+            </button>
+        </nav>
+        <main class="main-content">
+            <div id="pipelineTab" class="tab-content active">
+                <div class="pipeline-container" id="pipelineContainer"></div>
+            </div>
+            <div id="dailyTab" class="tab-content">
+                <div class="daily-info">
+                    <i class="fas fa-info-circle"></i>
+                    일별 확인 가능한 9개 단계만 표시됩니다
+                </div>
+                <div class="daily-container" id="dailyContainer"></div>
+            </div>
+            <div id="chartTab" class="tab-content">
+                <div class="chart-header">
+                    <h2>
+                        <i class="fas fa-filter"></i>
+                        영업 퍼널 분석
+                    </h2>
+                    <div class="chart-stats" id="chartStats"></div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="funnelChart"></canvas>
+                </div>
+            </div>
+        </main>
+        <button class="floating-add-btn" id="btnAdd" title="단계 추가">
+            <i class="fas fa-plus"></i>
+        </button>
+    </div>
+    <div id="stageModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">단계 추가</h2>
+                <button class="modal-close" id="modalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="stageName">
+                        <i class="fas fa-tag"></i>
+                        단계명
+                    </label>
+                    <input type="text" id="stageName" placeholder="예: 1차콜 (통화량)">
+                </div>
+                <div class="form-group">
+                    <label for="stageRole">
+                        <i class="fas fa-user-tag"></i>
+                        담당자
+                    </label>
+                    <select id="stageRole">
+                        <option value="신입사원">신입사원</option>
+                        <option value="사원">사원</option>
+                        <option value="팀장">팀장</option>
+                        <option value="계약완료">계약완료</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <i class="fas fa-calendar-check"></i>
+                        일별 확인 가능
+                    </label>
+                    <div class="toggle-switch">
+                        <input type="checkbox" id="stageDaily" class="toggle-input">
+                        <label for="stageDaily" class="toggle-label"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="btnModalCancel">취소</button>
+                <button class="btn btn-primary" id="btnModalSave">저장</button>
+            </div>
+        </div>
+    </div>
+    <script src="js/app.js"></script>
+</body>
+</html>
